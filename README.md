@@ -1,0 +1,1 @@
+# solr-dataimport-scheduler
