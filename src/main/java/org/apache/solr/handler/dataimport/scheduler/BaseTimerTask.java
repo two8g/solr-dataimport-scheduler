@@ -30,14 +30,16 @@ public abstract class BaseTimerTask extends TimerTask {
 	protected String reBuildIndexBeginTime;
 	protected String reBuildIndexInterval;
 
+	protected String webAppName;
+
 	protected static final Logger logger = LoggerFactory
 			.getLogger(BaseTimerTask.class);
 
 	public BaseTimerTask(String webAppName, Timer t) throws Exception {
 		// load properties from global dataimport.properties
 		p = new SolrDataImportProperties();
+		this.webAppName = webAppName;
 		reloadParams();
-		fixParams(webAppName);
 
 		if (!syncEnabled.equals("1"))
 			throw new Exception("Schedule disabled");
@@ -71,6 +73,7 @@ public abstract class BaseTimerTask extends TimerTask {
 		reBuildIndexInterval = p
 				.getProperty(SolrDataImportProperties.REBUILDINDEXINTERVAL);
 
+		fixParams(this.webAppName);
 	}
 
 	protected void fixParams(String webAppName) {
